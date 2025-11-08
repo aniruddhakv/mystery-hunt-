@@ -12,7 +12,16 @@ const jwt = require('jsonwebtoken');
 const app = express();
 
 // Middleware
-app.use(cors());
+// CORS configuration for Railway backend + Vercel frontend
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://your-vercel-app.vercel.app', // Replace with your Vercel URL
+    /\.vercel\.app$/ // Allow all Vercel preview deployments
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.static('public'));
 
