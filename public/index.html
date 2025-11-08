@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunt Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="container">
+            <div class="logo">🏆</div>
+            <h1>Treasure Hunt</h1>
+            <p class="subtitle">Mystery Hunt Adventure</p>
+            
+            <form id="loginForm" class="form">
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div id="loginError" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen">
+        <div class="header">
+            <div class="header-content">
+                <h2>Level <span id="currentLevel">1</span>/<span id="totalLevels">12</span></h2>
+                <button id="logoutBtn" class="btn-icon">🚪</button>
+            </div>
+            <div class="timer">
+                <span class="timer-icon">⏱️</span>
+                <span id="timer">00:00:00</span>
+            </div>
+        </div>
+
+        <div class="container game-container">
+            <div class="location-card">
+                <div class="location-icon">📍</div>
+                <h3 id="locationName">Notice Board</h3>
+            </div>
+
+            <div class="clue-card">
+                <div class="clue-header">
+                    <span class="clue-icon">🗺️</span>
+                    <h4>Your Clue</h4>
+                </div>
+                <p id="clueText" class="clue-text"></p>
+                <p id="hintText" class="hint-text"></p>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p class="progress-text">Progress: <span id="progressPercent">0</span>%</p>
+            </div>
+
+            <button id="scanBtn" class="btn btn-primary btn-large">
+                📷 Scan QR Code
+            </button>
+
+            <div class="levels-grid" id="levelsGrid"></div>
+        </div>
+    </div>
+
+    <!-- QR Scanner Modal -->
+    <div id="scannerModal" class="modal">
+        <div class="modal-content scanner-modal">
+            <div class="modal-header">
+                <h2>📷 Scan QR Code</h2>
+                <button id="closeScannerBtn" class="modal-close">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="scanner-container">
+                    <div id="qrReader" class="qr-reader"></div>
+                    <p class="scanner-status" id="scannerStatus">Initializing camera...</p>
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <div class="manual-input-section">
+                    <label for="manualQRInput">Enter QR Code Manually:</label>
+                    <div class="input-group">
+                        <input type="text" id="manualQRInput" placeholder="TREASURE_HUNT_QR_X" class="manual-qr-input">
+                        <button id="submitManualQR" class="btn btn-primary">
+                            <span>✓</span> Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Screen -->
+    <div id="completionScreen" class="screen">
+        <div class="container completion-container">
+            <div class="completion-animation">
+                <div class="trophy-icon">🏆</div>
+                <div class="confetti">🎉</div>
+            </div>
+            
+            <h1 class="completion-title">Congratulations!</h1>
+            <p class="completion-message">You've completed the treasure hunt!</p>
+            
+            <div class="time-display">
+                <div class="time-label">Your Time</div>
+                <div id="finalTime" class="time-value">00:00:00</div>
+            </div>
+            
+            <button id="backToLoginBtn" class="btn btn-primary">Back to Login</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminScreen" class="screen">
+        <div class="admin-header">
+            <div class="admin-header-content">
+                <h1>👨‍💼 Admin Panel</h1>
+                <p class="admin-subtitle">Treasure Hunt Management</p>
+            </div>
+            <button id="adminLogoutBtn" class="btn btn-logout">
+                <span>🚪</span> Logout
+            </button>
+        </div>
+
+        <div class="container admin-container">
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Total Players</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="activeUsers">0</div>
+                        <div class="stat-label">Active Games</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="completedUsers">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2>👥 Users Management</h2>
+                    <div class="header-actions">
+                        <button id="createUserBtn" class="btn btn-primary">
+                            <span>➕</span> Create New User
+                        </button>
+                        <button id="refreshUsersBtn" class="btn btn-secondary">
+                            <span>🔄</span> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="users-table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Level</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="6" class="loading">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create User Modal -->
+    <div id="createUserModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>➕ Create New User</h2>
+                <button id="closeCreateUserBtn" class="modal-close">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="createUserForm">
+                    <div class="form-group">
+                        <label for="newUsername">Username</label>
+                        <input type="text" id="newUsername" placeholder="Enter username" required autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">Password</label>
+                        <input type="password" id="newPassword" placeholder="Enter password" required autocomplete="new-password">
+                    </div>
+
+                    <div id="createUserError" class="error-message"></div>
+                    <div id="createUserSuccess" class="success-message"></div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="cancelCreateUserBtn" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span>✓</span> Create User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+
