@@ -2,7 +2,7 @@
 // For Railway backend + Vercel frontend setup
 const API_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:3000/api'
-    : 'https://your-railway-app.railway.app/api'; // Replace with your Railway URL
+    : 'https://mystery-hunt-production.up.railway.app/api';
 
 // State Management
 let currentUser = null;

@@ -17,7 +17,7 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:5173',
-    'https://your-vercel-app.vercel.app', // Replace with your Vercel URL
+    'https://mystery-hunt-two.vercel.app',
     /\.vercel\.app$/ // Allow all Vercel preview deployments
   ],
   credentials: true
